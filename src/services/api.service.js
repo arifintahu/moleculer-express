@@ -9,13 +9,13 @@ module.exports = {
     name: "api",
     mixins: [db()],
     settings: {
-        port: process.env.PORT || process.env.APP_PORT,
-        host: process.env.APP_HOST || "0.0.0.0"
+        port: process.env.PORT || 3003,
+        host: process.env.HOST || null
     },
     methods: {
 
         initRoutes(app) {
-            app.use(`/${process.env.APP_API}`, router());
+            app.use(`/${process.env.API}`, router());
         },
 
         handleErr(res) {
@@ -38,7 +38,7 @@ module.exports = {
             if (err)
                 return this.broker.fatal(err);
 
-            this.logger.info(`Server started on ${this.settings.host}:${this.settings.port}`);
+            this.logger.info(`Server started on port ${this.settings.port}`);
         });
     },
     stopped() {

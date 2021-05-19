@@ -15,7 +15,7 @@ module.exports = function() {
                         port    : parseInt(process.env.DB_PORT, 10) || 5432,
                         dialect : process.env.DB_ENGINE,
                         schema  : process.env.DB_SCHEMA,
-                        logging : process.env.DB_LOGGING ? console.log : false,
+                        logging : process.env.DB_LOGGING ? this.logger.info : false,
                         native  : true, 
                         ssl     : true
                     });

@@ -100,8 +100,7 @@ module.exports = {
 
     async created(broker) {
         const loader    = new Loaders();
-        const msg       = await loader.started();
-        console.log(msg);
+        await loader.started();
     },
 
     async started(broker) {},
