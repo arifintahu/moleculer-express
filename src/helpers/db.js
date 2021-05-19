@@ -12,16 +12,18 @@ module.exports = function() {
                 return new Promise((resolve, reject) => {
                     const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
                         host    : process.env.DB_HOST,
-                        port    : process.env.DB_PORT,
+                        port    : parseInt(process.env.DB_PORT, 10) || 5432,
                         dialect : process.env.DB_ENGINE,
                         schema  : process.env.DB_SCHEMA,
-                        logging : process.env.DB_LOGGING ? console.log : false
+                        logging : process.env.DB_LOGGING ? console.log : false,
+                        native  : true, 
+                        ssl     : true
                     });
 
                     sequelize.authenticate()
                         .then(() => {
                             this.logger.info("Database connection has been established successfully.");
-                            const path  = `${basedir}/src/schemas`;
+                            const path  = `${basedir}/src/models`;
                             const db    = {};
 
                             fs.readdirSync(path).map((file, idx) => {
@@ -45,10 +47,11 @@ module.exports = function() {
         },
 
         async started() {
-            if (process.env.DB_LOAD == true) {
+            if (process.env.DB_LOAD == "true") {
+                this.logger.info("Waiting for database connection.");
                 const db = await this.database();
             
-                global.db = require(`${basedir}/src/schemas/relation`)(db);
+                global.db = require(`${basedir}/src/models/relation`)(db);
                 global.Op = Op;
             } else {
                 this.logger.info("Database configuration is false.");

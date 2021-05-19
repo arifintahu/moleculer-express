@@ -1,9 +1,4 @@
-/**
- * @file        : main.js
- * @description : Main controller
- */
-
-`use strict`;
+"use strict";
 
 module.exports = {
 

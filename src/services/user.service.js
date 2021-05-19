@@ -31,13 +31,44 @@ module.exports = {
                     });
                 });
             }
-        }
+        },
+        list: {
+            async handler(ctx) {
+                const data =  ctx.params;
+                return new Promise((resolve, reject) => {
+                    this.findAllUser()
+                    .then(result => {
+                        resolve({
+                            status: true,
+                            data: result
+                        });
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
+                });
+            }
+        },
     },
 
     methods: {
         helloworld: () => {
             return new Promise(resolve => {
                 resolve("Hello World!");
+            });
+        },
+        findAllUser: () => {
+            return new Promise((resolve, reject) => {
+                db.user.findAll({
+                    where: {
+                        statusid: 1
+                    },
+                    raw: true
+                }).then(result => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                });
             });
         }
     },

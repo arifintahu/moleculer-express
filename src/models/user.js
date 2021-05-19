@@ -1,38 +1,42 @@
 "use strict";
 
-const Sequelize = require(`sequelize`);
+const Sequelize = require("sequelize");
 
 module.exports = (db) => {
 
     return db.define("user", {
-        user_uid      : {
-            type       : Sequelize.UUIDV4,
-            primaryKey : true,
-            defaultValue: Sequelize.UUIDv4
+        user_uid            : {
+            type            : Sequelize.UUIDV4,
+            primaryKey      : true,
+            defaultValue    : Sequelize.UUIDv4
         },
-        name      : {
-            type       : Sequelize.STRING,
-            allowNull : false
+        email               : {
+            type            : Sequelize.STRING,
+            allowNull       : false
         },
-        customer_id      : {
-            type       : Sequelize.STRING
+        password            : {
+            type            : Sequelize.STRING,
+            allowNull       : false
         },
-        username      : {
-            type       : Sequelize.STRING
+        fullname            : {
+            type            : Sequelize.STRING
         },
-        statusid  : {
-            type      : Sequelize.INTEGER
+        validdate           : {
+            type            : Sequelize.DATE
         },
-        createdate    : {
-            type      : Sequelize.DATE
+        statusid            : {
+            type            : Sequelize.INTEGER
         },
-        createby      : {
-            type      : Sequelize.STRING
+        createdate          : {
+            type            : Sequelize.DATE
+        },
+        createby            : {
+            type            : Sequelize.STRING
         }
     }, {
-        freezeTableName : true,
-        createdAt       : false,
-        updatedAt       : false,
+        freezeTableName     : true,
+        createdAt           : false,
+        updatedAt           : false
     });
 
 };

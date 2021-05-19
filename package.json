@@ -33,6 +33,7 @@
     "named-routes": "^2.0.7",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
+    "pg-native": "^3.0.0",
     "sequelize": "^6.6.2"
   },
   "engines": {
