@@ -1,21 +1,30 @@
 "use strict";
 
-const express       = require("express");
-const path          = require("path");
-const db            = require("../helpers/db");
-const router        = require("../helpers/router");
+const express   = require("express");
+const path      = require("path");
+const cors      = require("cors");
+const db        = require("../helpers/db");
+const router    = require("../helpers/router");
 
 module.exports = {
     name: "api",
     mixins: [db()],
     settings: {
-        port: process.env.PORT || 3003,
-        host: process.env.HOST || null
+        port: process.env.PORT      || 3003,
+        host: process.env.HOST      || null,
+        api: process.env.API        || null,
+        cors: process.env.CORS_URL  || "*"
     },
     methods: {
 
         initRoutes(app) {
+            app.use(cors({
+                origin: this.settings.cors,
+                optionsSuccessStatus: 200
+            }));
             app.use(`/${process.env.API}`, router());
+
+            return app;
         },
 
         handleErr(res) {
@@ -26,8 +35,7 @@ module.exports = {
 
     },
     async created() {
-        this.app            = express();
-        this.initRoutes(this.app);
+        this.app            = this.initRoutes(express());
         
         global.broker       = this.broker;
         global.handleErr    = this.handleErr;

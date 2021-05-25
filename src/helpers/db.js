@@ -10,15 +10,23 @@ module.exports = function() {
         methods: {
             database() {
                 return new Promise((resolve, reject) => {
-                    const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
-                        host    : process.env.DB_HOST,
-                        port    : parseInt(process.env.DB_PORT, 10) || 5432,
-                        dialect : process.env.DB_ENGINE,
-                        schema  : process.env.DB_SCHEMA,
-                        logging : process.env.DB_LOGGING ? this.logger.info : false,
-                        native  : true, 
-                        ssl     : true
-                    });
+                    if (process.env.DB_URL) {
+                        var sequelize = new Sequelize(process.env.DB_URL, {
+                            logging : process.env.DB_LOGGING ? this.logger.info : false,
+                            native  : true, 
+                            ssl     : true
+                        });
+                    } else {
+                        var sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+                            host    : process.env.DB_HOST,
+                            port    : parseInt(process.env.DB_PORT, 10) || 5432,
+                            dialect : process.env.DB_ENGINE,
+                            schema  : process.env.DB_SCHEMA,
+                            logging : process.env.DB_LOGGING ? this.logger.info : false,
+                            native  : true, 
+                            ssl     : true
+                        });
+                    }
 
                     sequelize.authenticate()
                         .then(() => {

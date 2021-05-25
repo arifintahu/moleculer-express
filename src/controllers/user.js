@@ -8,10 +8,10 @@ module.exports = {
             ... req.query,
             ... req.params
         }).then(result => {
-            if (result.status) {
-                res.json(result.data);
+            if (result) {
+                res.json(result);
             } else {
-                res.status(401).send(result.data);
+                res.status(401);
             }
         }).catch(handleErr(res));
     }

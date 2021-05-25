@@ -19,6 +19,10 @@ module.exports = {
             }
         },
         hello: {
+            params: {
+                name: { type: "string", optional: true},
+                createby: { type: "string", optional: true}
+            },
             async handler(ctx) {
                 const data =  ctx.params;
                 return new Promise( resolve => {
